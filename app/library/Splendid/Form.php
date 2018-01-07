@@ -498,15 +498,15 @@ class Form
 
     /**
      * Render form
-	 * @param string - render element
+     * @param string - render element
      */
     public function render($element = null)
     {
-		if ($element) {
-			$this->inputs[$element]->render();
-			return null;
-		}
-		
+        if ($element) {
+            $this->inputs[$element]->render();
+            return null;
+        }
+
         $this->startForm();
         foreach($this->inputs as $input) {
             if (is_string($input)) {

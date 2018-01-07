@@ -8,16 +8,16 @@
  */
 class ErrorController extends BaseController
 {
-	public function beforeProcess()
+    public function beforeProcess()
     {
         $this->metaHeader['title'] = 'Error 404 - Page not found';
         $this->metaHeader['description'] = 'Sorry, this page doesn\'t exist or was deleted.';
         $this->metaHeader['keywords'] = 'Error 404';
     }
 
-	public function process()
-	{
+    public function process()
+    {
         $this->view = 'errors/404';
-	}
-	
+    }
+
 }

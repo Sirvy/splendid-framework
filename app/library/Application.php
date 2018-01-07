@@ -8,30 +8,30 @@
  */
 class Application extends BaseController
 {
-	/**
-	 * @var stdClass
-	 */
-	protected $controller;
+    /**
+     * @var stdClass
+     */
+    protected $controller;
 
     /**
      * @var bool
      */
-	protected $isAjax = false;
+    protected $isAjax = false;
 
     /**
      * Application constructor
      */
-	public function __construct()
+    public function __construct()
     {
         $this->secureSession();
     }
 
     /**
-	 * Setting Controller from URL
-	 *
-	 * @param string - Controller name
-	 */
-	public function setController($class)
+     * Setting Controller from URL
+     *
+     * @param string - Controller name
+     */
+    public function setController($class)
     {
         $newClass = ucFirst($class) . 'Controller';
         if ($newClass == 'HomeController') {
@@ -47,37 +47,37 @@ class Application extends BaseController
             $this->controller = new ErrorController;
         }
     }
-	
 
-	/**
-	 * Processing controller
-	 *
-	 * @param array - of parameters in URL
-	 */
-	public function process()
-	{
-		if (empty($this->controller)) {
-			$this->controller = new IndexController;
-		}
+
+    /**
+     * Processing controller
+     *
+     * @param array - of parameters in URL
+     */
+    public function process()
+    {
+        if (empty($this->controller)) {
+            $this->controller = new IndexController;
+        }
 
         $this->controller->params = $this->params;
-		$this->controller->beforeProcess();
-		$this->controller->process();
-		$this->controller->afterProcess();
-		$this->data['controller'] = (!empty($this->params[0])) ? $this->params[0] : 'index';
+        $this->controller->beforeProcess();
+        $this->controller->process();
+        $this->controller->afterProcess();
+        $this->data['controller'] = (!empty($this->params[0])) ? $this->params[0] : 'index';
         if (!$this->isAjax) $this->setLayout();
 
-		if (USE_LANG && isset($_SESSION['lang'])) $this->lang = $_SESSION['lang'];
-	}
+        if (USE_LANG && isset($_SESSION['lang'])) $this->lang = $_SESSION['lang'];
+    }
 
 
-	/**
-	 * Setting layout
-	 */
-	private function setLayout()
-	{
-		$this->data["header"] = $this->controller->metaHeader;
-		$this->view = $this->controller->layout;
-	}
-	
+    /**
+     * Setting layout
+     */
+    private function setLayout()
+    {
+        $this->data["header"] = $this->controller->metaHeader;
+        $this->view = $this->controller->layout;
+    }
+
 }

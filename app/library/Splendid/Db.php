@@ -13,43 +13,43 @@ use Exception;
  */
 class Db
 {
-	/**
-	 * @var StdClass
-	 */
-	private $connection;
+    /**
+     * @var StdClass
+     */
+    private $connection;
 
-	/**
-	 * @var array
-	 */
-	private $settings = array(
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-		PDO::ATTR_EMULATE_PREPARES => false
-	);
+    /**
+     * @var array
+     */
+    private $settings = array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        PDO::ATTR_EMULATE_PREPARES => false
+    );
 
 
-	/**
-	 * Creates DB connection or dies when failed
-	 *
-	 * @param string
-	 * @param string
-	 * @param string
-	 * @param string
-	 */
-	public function connect($host, $user, $passwd, $database) {
-		if (!isset($this->connection)) {
-			try {
+    /**
+     * Creates DB connection or dies when failed
+     *
+     * @param string
+     * @param string
+     * @param string
+     * @param string
+     */
+    public function connect($host, $user, $passwd, $database) {
+        if (!isset($this->connection)) {
+            try {
                 $this->connection = @new PDO(
-					"mysql:host=$host;dbname=$database",
-					$user,
-					$passwd,
+                    "mysql:host=$host;dbname=$database",
+                    $user,
+                    $passwd,
                     $this->settings
-				);
-			} catch (Exception $e) {
-				die("Database connection error.");
-			}
-		}
-	}
+                );
+            } catch (Exception $e) {
+                die("Database connection error.");
+            }
+        }
+    }
 
 
     /**
@@ -57,20 +57,20 @@ class Db
      *
      * @return bool
      */
-	public function connected() {
-	    return isset($this->connection);
+    public function connected() {
+        return isset($this->connection);
     }
 
 
-	/**
-	 * Gets last inserted ID
-	 *
-	 * @return int
-	 */
-	public function getLastInsertId()
-	{
-		return $this->connection->lastInsertId();
-	}
+    /**
+     * Gets last inserted ID
+     *
+     * @return int
+     */
+    public function getLastInsertId()
+    {
+        return $this->connection->lastInsertId();
+    }
 
 
     /**
@@ -79,31 +79,31 @@ class Db
      * @param $query
      * @return mixed
      */
-	public function dbexec($query)
+    public function dbexec($query)
     {
-	    return $this->connection->exec($query);
+        return $this->connection->exec($query);
     }
 
 
-	/**
-	 * Inserts or updates row in Db
-	 *
-	 * @param string
-	 * @param array
-	 * @return int
-	 */
-	public function exec($query, array $args = array())
-	{
-		$sth = $this->connection->prepare($query);
-		$i = 0;
-		foreach($args as $arg) {
-			$i++;
-			$sth->bindParam($i, $arg);
-		}
-		$sth->execute($args);
+    /**
+     * Inserts or updates row in Db
+     *
+     * @param string
+     * @param array
+     * @return int
+     */
+    public function exec($query, array $args = array())
+    {
+        $sth = $this->connection->prepare($query);
+        $i = 0;
+        foreach($args as $arg) {
+            $i++;
+            $sth->bindParam($i, $arg);
+        }
+        $sth->execute($args);
         if (DEV_MODE) Debugger::$sqlQueries[] = $sth->queryString;
-		return $sth;
-	}
+        return $sth;
+    }
 
 
     /**
@@ -115,13 +115,13 @@ class Db
      * @internal param $array
      * @return StdClass
      */
-	public function get($query, array $args = array(), $fetchArray = false)
-	{
-		$sth = $this->connection->prepare($query);
-		$sth->execute($args);
+    public function get($query, array $args = array(), $fetchArray = false)
+    {
+        $sth = $this->connection->prepare($query);
+        $sth->execute($args);
         if (DEV_MODE) Debugger::$sqlQueries[] = $sth->queryString;
-		return $sth->fetch($fetchArray ? PDO::FETCH_BOTH : PDO::FETCH_OBJ);
-	}
+        return $sth->fetch($fetchArray ? PDO::FETCH_BOTH : PDO::FETCH_OBJ);
+    }
 
 
     /**
@@ -133,13 +133,13 @@ class Db
      * @internal param $array
      * @return array
      */
-	public function getAll($query, array $args = array(), $fetchArray = false)
-	{
-		$sth = $this->connection->prepare($query);
-		$sth->execute($args);
+    public function getAll($query, array $args = array(), $fetchArray = false)
+    {
+        $sth = $this->connection->prepare($query);
+        $sth->execute($args);
         if (DEV_MODE) Debugger::$sqlQueries[] = $sth->queryString;
-		return $sth->fetchAll($fetchArray ? PDO::FETCH_BOTH : PDO::FETCH_OBJ);
-	}
+        return $sth->fetchAll($fetchArray ? PDO::FETCH_BOTH : PDO::FETCH_OBJ);
+    }
 
 
     /**
@@ -285,5 +285,5 @@ class Db
     {
         return $this->connection->rollBack();
     }
-	
+
 }

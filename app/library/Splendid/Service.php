@@ -39,8 +39,8 @@ class Service {
      * @param $key
      * @return bool
      */
-	public function exist($key) {
-		return isset($this->objects[$key]);
-	}
+    public function exist($key) {
+        return isset($this->objects[$key]);
+    }
 
 }

@@ -16,7 +16,7 @@ $isModule = false;
  */
 require_once('config/config.php');
 if (file_exists(DB_CONFIG)) {
-	require_once(DB_CONFIG);
+    require_once(DB_CONFIG);
 } else {
     if (DEV_MODE) die("Database configuration file not found.");
     header("HTTP/1.1 500 Internal Server Error");
