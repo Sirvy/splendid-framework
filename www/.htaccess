@@ -1,0 +1,31 @@
+RewriteEngine On
+
+# Remove # to apply auto HTTPS and rename WEBSITEURL to your website URL
+#RewriteCond %{HTTPS} off 
+#RewriteCond %{HTTPS_HOST} !^WEBSITEURL$ [NC]
+#RewriteRule ^(.*)$ https://WEBSITEURL/$1 [L,R=301]
+
+Options -Indexes
+
+RewriteCond %{REQUEST_FILENAME} !/(css|fonts|ico|js)/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ ./index.php?page=$1 [QSA,L]
+
+RewriteRule /\.|^\.(?!well-known/) - [F]
+
+# Remove # to prevent access to sensitive files
+#RewriteRule !\.(pdf|eot|svg|ttf|woff|js|ico|gif|jpg|jpeg|png|css|rar|zip|tar\.gz|map)$ index.php [L]
+
+#php_flag display_startup_errors off
+#php_flag display_errors off
+#php_flag html_errors off
+#php_flag log_errors on
+#php_flag ignore_repeated_errors off
+#php_flag ignore_repeated_source off
+#php_flag report_memleaks on
+#php_flag track_errors on
+#php_value docref_root 0
+#php_value docref_ext 0
+#php_value error_reporting -1
+#php_value log_errors_max_len 0
