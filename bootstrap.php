@@ -14,6 +14,7 @@ $isModule = false;
 /*
  * Load configuration files
  */
+require_once('config/config.php');
 if (file_exists(DB_CONFIG)) {
 	require_once(DB_CONFIG);
 } else {
