@@ -2,8 +2,8 @@
 /**
  * Bootstrap
  *
- * @author		Bobby Tran <bobby-tran@email.cz>
- * @copyright	Copyright (c) 2017, Bobby Tran
+ * @author      Bobby Tran <bobby-tran@email.cz>
+ * @copyright   Copyright (c) 2017, Bobby Tran
  */
 
 header('X-Frame-Options: DENY');

@@ -3,8 +3,8 @@
 /**
  * Splendid Framework config
  *
- * @author		Bobby Tran <bobby-tran@email.cz>
- * @copyright	Copyright (c) 2017, Bobby Tran
+ * @author      Bobby Tran <bobby-tran@email.cz>
+ * @copyright   Copyright (c) 2017, Bobby Tran
  */
 
 /* Database configuration file path */
