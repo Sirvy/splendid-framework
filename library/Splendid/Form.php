@@ -136,7 +136,6 @@ class Form
             if (empty($_POST['token']) || $_SESSION['csrf_token'] != $_POST['token']) {
                 return false;
             }
-            $this->regenerateCSRFToken();
         }
         return true;
     }
@@ -531,15 +530,8 @@ class Form
         $this->endForm();
     }
 
-    private function regenerateCSRFToken()
-    {
-        $_SESSION['csrf_token'] = md5(mt_rand());
-    }
-
     public function secureCSRF()
     {
-        if (!isset($_SESSION['csrf_token']))
-            $this->regenerateCSRFToken();
         $this->secured = true;
     }
 }

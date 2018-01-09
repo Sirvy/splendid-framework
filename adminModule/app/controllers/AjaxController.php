@@ -8,7 +8,12 @@
  */
 class AjaxController extends BaseController
 {
-    protected function beforeProcess() {}
+    protected function beforeProcess()
+    {
+        if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['csrf_token']) {
+            $this->redirect('error');
+        }
+    }
 
     public function process()
     {

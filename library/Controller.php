@@ -98,6 +98,7 @@ abstract class Controller
         session_name($sessionName);
         session_start();
         session_regenerate_id();
+        $this->generateCSRFToken();
     }
 
     /**
@@ -155,6 +156,23 @@ abstract class Controller
         }
 
         $_SESSION['bf_key'] = microtime(true)*1000;
+    }
+
+    /**
+     * Generates CSRF token
+     */
+    protected function generateCSRFToken()
+    {
+        if (!isset($_SESSION['csrf_token']))
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+
+    /**
+     * Regenerates CSRF token
+     */
+    protected function regenerateCSRFToken()
+    {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
 
     /**
