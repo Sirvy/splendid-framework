@@ -12,7 +12,7 @@ mb_internal_encoding("UTF-8");
 function autoload($class)
 {
     $class = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $class);
-    $directory = '../app/library/';
+    $directory = '../library/';
     if (preg_match('/\SController$/', $class)) {
         $directory = '../app/controllers/';
     }

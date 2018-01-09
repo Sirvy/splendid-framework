@@ -38,7 +38,7 @@ class Application extends BaseController
             $newClass = 'IndexController';
         }
 
-        if (file_exists( dirname(__DIR__) . '/controllers/' . $newClass . ".php")) {
+        if (file_exists( dirname(__DIR__) . '/app/controllers/' . $newClass . ".php")) {
             $this->controller = new $newClass;
             if ($newClass == 'AjaxController') {
                 $this->isAjax = true;
