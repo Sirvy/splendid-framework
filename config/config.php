@@ -14,7 +14,7 @@ define('DB_CONFIG', dirname(__DIR__) . '/config/db_config.php');
 define('USE_LANG', true);
 
 /* Path to directory of language packs */
-define('LANG_DIR', '../app/library/language');
+define('LANG_DIR', '../library/language');
 
 /* Default language pack */
 define('DEFAULT_LANG', 'en');

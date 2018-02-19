@@ -28,9 +28,11 @@ if (file_exists(DB_CONFIG)) {
  * Check load time in develop mode
  * Print all errors in develop mode
  */
-if (DEV_MODE) $start_time = microtime(true);
+if (DEV_MODE) {
+    $start_time = microtime(true);
+    ini_set('display_errors', '1');
+}
 error_reporting((DEV_MODE) ? E_ALL : 0);
-
 
 /*
  * Parse URL
