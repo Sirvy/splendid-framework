@@ -14,7 +14,7 @@ use Exception;
 class Db
 {
     /**
-     * @var StdClass
+     * @var PDO
      */
     private $connection;
 
@@ -52,6 +52,12 @@ class Db
     }
 
 
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
+
     /**
      * Checks if app is connected to db
      *
@@ -81,6 +87,7 @@ class Db
      */
     public function dbexec($query)
     {
+        if (DEV_MODE) Debugger::$sqlQueries[] = $query;
         return $this->connection->exec($query);
     }
 
@@ -102,7 +109,7 @@ class Db
         }
         $sth->execute($args);
         if (DEV_MODE) Debugger::$sqlQueries[] = $sth->queryString;
-        return $sth;
+        return $sth->rowCount();
     }
 
 
@@ -113,7 +120,7 @@ class Db
      * @param array $args
      * @param bool $fetchArray
      * @internal param $array
-     * @return StdClass
+     * @return object
      */
     public function get($query, array $args = array(), $fetchArray = false)
     {
@@ -162,6 +169,29 @@ class Db
             $query .= "WHERE " . $conditions;
         }
         return $this->getAll($query, $args, $fetchArray);
+    }
+
+
+    /**
+     * Selects one row
+     *
+     * @param $table
+     * @param $columns
+     * @param null $conditions
+     * @param array $args
+     * @param bool $fetchArray
+     * @return object
+     */
+    public function selectOne($table, $columns, $conditions = null, array $args = array(), $fetchArray = false)
+    {
+        if (empty($columns)) {
+            $columns = '*';
+        }
+        $query = "SELECT " . $columns . " FROM `" . $table . "`";
+        if (!empty($conditions)) {
+            $query .= "WHERE " . $conditions;
+        }
+        return $this->get($query, $args, $fetchArray);
     }
 
 
