@@ -29,10 +29,10 @@ class User {
     private $token;
 
     /**
-     * Current user optional data
+     * Optional data
      * @var array
      */
-    private $data = array();
+    private $data;
 
     /**
      * User constructor.
@@ -41,6 +41,7 @@ class User {
         if (isset($_SESSION['user_id'])) $this->id = $_SESSION['user_id'];
         if (isset($_SESSION['user_name'])) $this->username = $_SESSION['user_name'];
         if (isset($_SESSION['user_token'])) $this->token = $_SESSION['user_token'];
+        if (isset($_SESSION['user_data'])) $this->data = $_SESSION['user_data'];
     }
 
     /**
@@ -72,6 +73,7 @@ class User {
         if (isset($_SESSION['user_id'])) unset($_SESSION['user_id']);
         if (isset($_SESSION['user_name'])) unset($_SESSION['user_name']);
         if (isset($_SESSION['user_token'])) unset($_SESSION['user_token']);
+        if (isset($_SESSION['user_data'])) unset($_SESSION['user_data']);
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
     }
@@ -81,7 +83,7 @@ class User {
      * @param $data
      */
     public function setData($data) {
-        $this->data = $data;
+        $_SESSION['user_data'] = $data;
     }
 
     /**
@@ -90,7 +92,7 @@ class User {
      * @param $value
      */
     public function addData($key, $value) {
-        $this->data[$key] = $value;
+        $_SESSION['user_data'][$key] = $value;
     }
 
     /**
@@ -98,15 +100,7 @@ class User {
      * @param $key
      * @return mixed
      */
-    public function getData($key) {
-        return $this->data[$key];
-    }
-
-    /**
-     * Returns current user all optional data
-     * @return array
-     */
-    public function getDatas() {
-        return $this->data;
+    public function getData($key = NULL) {
+        return $key === NULL ? $_SESSION['user_data'] : $_SESSION['user_data'][$key];
     }
 }
