@@ -59,6 +59,18 @@ class Image
     );
 
     /**
+     * Allowed image extensions
+     * @var array
+     */
+    private $allowed_ext_list = array(
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/bmp',
+        'image/gif'
+    );
+
+    /**
      * Constructor
      *
      * @param src string source file
@@ -89,7 +101,7 @@ class Image
     public function checkType($arr = null)
     {
         if ($arr === null) {
-            $arr = $this->allowed_ext;
+            $arr = $this->allowed_ext_list;
         }
         return in_array($this->type, $arr);
     }
@@ -102,7 +114,7 @@ class Image
      */
     public function checkImage()
     {
-        return getimagesize($this->tmp_name);
+        return in_array(getimagesize($this->tmp_name)['mime'], $this->allowed_ext_list);
     }
 
 
