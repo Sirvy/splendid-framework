@@ -34,6 +34,8 @@ class FormElement
 
     private $selected;
 
+    private $value;
+
     public function __construct($type, $name, $label = null)
     {
         $this->type = $type;
@@ -46,7 +48,7 @@ class FormElement
                 $this->result = "<input type='file' name='" . $this->name . "'";
                 break;
             case 'checkbox':
-                $this->result .= "<label><input type='checkbox' name='" . $this->name . "'";
+                $this->result .= "<label><input type='checkbox' name='" . $this->name . "[]'";
                 break;
             case 'combobox':
             case 'select':
@@ -66,31 +68,45 @@ class FormElement
     public function setItems(array $items = array())
     {
         $this->items = $items;
+        return $this;
     }
 
     public function setExtensions(array $ext = array())
     {
         $this->extensions = $ext;
+        return $this;
     }
 
     public function addItem($item)
     {
         $this->items[] = $item;
+        return $this;
     }
 
     public function addExtension($ext)
     {
         $this->extensions[] = $ext;
+        return $this;
     }
 
-    public function setChecked(array $checked = array())
+    public function setChecked($checked)
     {
-        $this->checked = $checked;
+        if ($checked == Form::SENT_VALUE) {
+            $this->checked = (isset($_POST[$this->name]) ? $_POST[$this->name] : null);
+        } else {
+            $this->checked = $checked;
+        }
+        return $this;
     }
 
     public function setSelected($selected)
     {
-        $this->selected = $selected;
+        if ($selected == Form::SENT_VALUE) {
+            $this->selected = (isset($_POST[$this->name]) ? $_POST[$this->name] : null);
+        } else {
+            $this->selected = $selected;
+        }
+        return $this;
     }
 
     public function getType()
@@ -101,6 +117,7 @@ class FormElement
     public function setError()
     {
         $this->classes[] = "error";
+        return $this;
     }
 
     public function hasClass($class = null)
@@ -137,6 +154,7 @@ class FormElement
         if ($this->getType() != 'textarea')
             $this->result .= ' value="' . htmlspecialchars($value) . '"';
 
+        $this->value = $value;
         return $this;
     }
 
@@ -190,7 +208,7 @@ class FormElement
             $i = 0;
             foreach($this->items as $value => $label) {
                 $finalResult .= $this->result . "value='" . $value . "'";
-                if ($i == 0) {
+                if (($this->selected && $value == $this->selected) || (!$this->selected && $i == 0)) {
                     $finalResult .= " checked='checked'";
                 }
                 $finalResult .= "> " . $label . "</label>" . PHP_EOL;

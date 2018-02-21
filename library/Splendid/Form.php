@@ -155,7 +155,7 @@ class Form
      *
      * @param string - element name
      * @param string - element label
-     * @return stdClass
+     * @return FormElement
      */
     public function addText($name, $label = null)
     {
@@ -169,7 +169,7 @@ class Form
      *
      * @param string - element name
      * @param string - element label
-     * @return stdClass
+     * @return FormElement
      */
     public function addPassword($name, $label = null)
     {
@@ -183,7 +183,7 @@ class Form
      *
      * @param string - element name
      * @param string - element label
-     * @return stdClass
+     * @return FormElement
      */
     public function addNumber($name, $label = null)
     {
@@ -197,7 +197,7 @@ class Form
      *
      * @param string - element name
      * @param string - element label
-     * @return stdClass
+     * @return FormElement
      */
     public function addDate($name, $label = NULL)
     {
@@ -210,7 +210,7 @@ class Form
      * Add hidden
      *
      * @param string - element name
-     * @return stdClass
+     * @return FormElement
      */
     public function addHidden($name)
     {
@@ -225,7 +225,7 @@ class Form
      * @param string - element name
      * @param string - element label
      * @param array - of items
-     * @return stdClass
+     * @return FormElement
      */
     public function addCheckbox($name, $label, $items)
     {
@@ -241,7 +241,7 @@ class Form
      * @param string - element name
      * @param string - element label
      * @param array - of items
-     * @return stdClass
+     * @return FormElement
      */
     public function addRadio($name, $label = NULL, array $items = NULL)
     {
@@ -257,7 +257,7 @@ class Form
      * @param string - element name
      * @param string - element label
      * @param array - of items
-     * @return stdClass
+     * @return FormElement
      */
     public function addTextArea($name, $label = NULL)
     {
@@ -272,12 +272,12 @@ class Form
      * @param string - element name
      * @param string - element label
      * @param array - of allowed file extensions
-     * @return stdClass
+     * @return FormElement
      */
     public function addFile($name, $label, array $extensions = NULL)
     {
         $this->inputs[$name] = new FormElement('file', $name, $label);
-        $this->inputs[$name]->setExtensions($extensions);
+        if($extensions) $this->inputs[$name]->setExtensions($extensions);
         $this->fileUpload = true;
         return $this->inputs[$name];
     }
@@ -289,7 +289,7 @@ class Form
      * @param string - element name
      * @param string - element label
      * @param array - of items
-     * @return stdClass
+     * @return FormElement
      */
     public function addCombobox($name, $label, array $items = NULL)
     {
@@ -303,7 +303,7 @@ class Form
      * Add submit button
      *
      * @param string - element name
-     * @return stdClass
+     * @return FormElement
      */
     public function addSubmit($name = "")
     {
@@ -313,7 +313,13 @@ class Form
     }
 
 
-
+    /**
+     * Adds HTML code
+     *
+     * @param $name
+     * @param $html
+     * @return FormElement
+     */
     public function addHTML($name, $html)
     {
         $this->inputs[$name] = $html;
