@@ -1,7 +1,6 @@
 # splendid-framework
 Splendid PHP Framework
 
-Simple MVC PHP Framework for little web projects. 
+Simple MVC PHP Framework for little web projects made as my high school project.
 
-Make it fast.
-Make it secure.
+Also managed to write some small e-commerce apps in it.
